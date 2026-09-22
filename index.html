@@ -62,23 +62,6 @@ const CONFIG = {
       sub: "Information Security Management",
       img: "iso27001.svg",
     },
-    tisax: {
-      label: "TISAX",
-      sub: "ENX Portal · Participant ID P6HZXT",
-      svg: `
-        <rect width="104" height="104" fill="#FFFFFF" rx="2"/>
-        <rect width="104" height="32" fill="#005B9A"/>
-        <text x="52" y="14" font-family="Inter,sans-serif" font-size="7" fill="rgba(255,255,255,0.6)" text-anchor="middle" letter-spacing="1.5">ENX ASSOCIATION</text>
-        <text x="52" y="27" font-family="Inter,sans-serif" font-size="13" fill="white" text-anchor="middle" font-weight="700" letter-spacing="1">TISAX</text>
-        <text x="52" y="48" font-family="Inter,sans-serif" font-size="7" fill="#005B9A" text-anchor="middle" font-weight="600" letter-spacing="0.5">ASSESSMENT LEVELS</text>
-        <text x="35" y="65" font-family="Inter,sans-serif" font-size="13" fill="#005B9A" text-anchor="middle" font-weight="700">AL2</text>
-        <line x1="52" y1="55" x2="52" y2="70" stroke="#e0e0e0" stroke-width="1"/>
-        <text x="69" y="65" font-family="Inter,sans-serif" font-size="13" fill="#005B9A" text-anchor="middle" font-weight="700">AL3</text>
-        <line x1="14" y1="75" x2="90" y2="75" stroke="#f0f0f0" stroke-width="1"/>
-        <text x="52" y="85" font-family="Inter,sans-serif" font-size="6.5" fill="#888" text-anchor="middle">Participant ID</text>
-        <text x="52" y="95" font-family="Inter,sans-serif" font-size="7.5" fill="#333" text-anchor="middle" font-weight="600" letter-spacing="0.5">P6HZXT</text>
-      `,
-    },
     iso21434: {
       label: "ISO/SAE 21434",
       sub: "TÜV SÜD · Cybersecurity Engineering",
@@ -148,7 +131,7 @@ const CONFIG = {
       id: "information-security",
       label: "Information Security",
       tagline: "Controls protecting customer data across the full lifecycle.",
-      body: "Our information security program is built on ISO/IEC 27001 and SOC 2 Type II frameworks, and independently assessed through TISAX at Assessment Levels AL2 and AL3. It covers access control, encryption, incident response, and business continuity across the full lifecycle of customer data. Independent auditors assess our controls annually.",
+      body: "Our information security program is built on ISO/IEC 27001 and SOC 2 Type II frameworks. It covers access control, encryption, incident response, and business continuity across the full lifecycle of customer data. Independent auditors assess our controls annually.",
       badgeIds: [],
       tiles: [
         {
@@ -876,19 +859,6 @@ function renderTile(t) {
   `;
 }
 
-const TISAX_SVG = `
-  <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg">
-    <rect width="140" height="80" rx="7" fill="#003B73"/>
-    <rect x="0.75" y="0.75" width="138.5" height="78.5" rx="6.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1.5"/>
-    <text x="70" y="30" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="21" fill="white" text-anchor="middle" font-weight="800" letter-spacing="4">TISAX</text>
-    <line x1="18" y1="38" x2="122" y2="38" stroke="rgba(255,255,255,0.1)" stroke-width="0.75"/>
-    <rect x="21" y="44" width="44" height="20" rx="4" fill="rgba(255,255,255,0.1)"/>
-    <text x="43" y="58" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="11" fill="white" text-anchor="middle" font-weight="700" letter-spacing="0.5">AL2</text>
-    <rect x="75" y="44" width="44" height="20" rx="4" fill="rgba(255,255,255,0.1)"/>
-    <text x="97" y="58" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="11" fill="white" text-anchor="middle" font-weight="700" letter-spacing="0.5">AL3</text>
-    <text x="70" y="74" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="7" fill="rgba(255,255,255,0.3)" text-anchor="middle" letter-spacing="2">ENX ASSOCIATION</text>
-  </svg>
-`;
 
 function renderCertCard(c) {
   const mark = c.tisaxText
@@ -935,7 +905,7 @@ document.getElementById('sections-container').innerHTML = CONFIG.sections.map((s
         <div class="tisax-ref">
           <div class="tisax-ref-left">
             <span class="tisax-ref-name">TISAX — Trusted Information Security Assessment Exchange</span>
-            <span class="tisax-ref-meta">Applied Intuition Inc. and Applied Intuition GmbH are registered TISAX® Participants. TISAX® is a registered trademark of ENX Association, governed by <a href="https://enx.com/tisax" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">ENX Association</a>. TISAX and TISAX results are not intended for general public. Contact our security team for additional information.</span>
+            <span class="tisax-ref-meta">Applied Intuition Inc. and Applied Intuition GmbH are registered TISAX® Participants. ENX Association governs TISAX® on behalf of the German VDA for common acceptance of information security assessments in the automotive industry. TISAX® is a registered trademark of ENX Association — see <a href="https://enx.com/tisax" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">enx.com/tisax</a>. TISAX and TISAX results are not intended for general public. Contact our security team for additional information.</span>
           </div>
         </div>
       ` : ''}
