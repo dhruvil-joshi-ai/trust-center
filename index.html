@@ -105,63 +105,50 @@ const CONFIG = {
       body: "Audit reports and certification evidence are available to customers and prospects under NDA. Contact your account team to request access.",
       certs: [
         {
-          name: "TISAX",
-          issuer: "ENX Association",
-          scope: "Information Security · Assessment Levels AL2 & AL3",
-          detail: "Results verified via ENX Portal",
-          action: { label: "Verify on ENX Portal", href: "https://portal.enx.com" },
-          tisaxText: true,
-        },
-        {
           name: "ISO/SAE 21434",
-          issuer: "TÜV SÜD Product Service GmbH",
+          issuer: "TÜV SÜD",
           scope: "Cybersecurity Engineering for Road Vehicles",
-          detail: "ISO/SAE 21434:2021",
           img: "iso21434.png",
         },
         {
           name: "ISO 26262",
-          issuer: "TÜV SÜD Product Service GmbH",
+          issuer: "TÜV SÜD",
           scope: "Functional Safety Development Process",
-          detail: "TÜV SÜD Certified",
           img: "iso26262.jpeg",
         },
         {
           name: "ISO/IEC 27001",
           issuer: "Schellman",
           scope: "Information Security Management System",
-          detail: "Corporate & cloud environments · Annual audit",
           img: "iso27001.svg",
         },
         {
           name: "SOC 2 Type II",
           issuer: "AICPA",
           scope: "Security · Availability · Confidentiality",
-          detail: "Common Criteria 2022 · Annual audit",
           img: "soc2.webp",
         },
         {
           name: "ISO 9001:2015",
-          issuer: "TÜV SÜD America Inc.",
+          issuer: "TÜV SÜD",
           scope: "Quality Management System",
-          detail: "TÜV SÜD Certified",
           img: "iso9001.jpeg",
         },
         {
           name: "Automotive SPICE",
-          issuer: "TÜV SÜD Product Service GmbH",
+          issuer: "TÜV SÜD",
           scope: "Software Process Assessment · Capability Level 2",
-          detail: "TÜV SÜD Certified",
           aspiceText: true,
         },
       ],
+      tisaxRef: true,
       tiles: [],
     },
     {
       id: "information-security",
       label: "Information Security",
       tagline: "Controls protecting customer data across the full lifecycle.",
-      body: "Our information security program is built on ISO/IEC 27001 and SOC 2 Type II frameworks. It covers access control, encryption, incident response, and business continuity across the full lifecycle of customer data. Independent auditors assess our controls annually.",
+      body: "Our information security program is built on ISO/IEC 27001 and SOC 2 Type II frameworks, and independently assessed through TISAX at Assessment Levels AL2 and AL3. It covers access control, encryption, incident response, and business continuity across the full lifecycle of customer data. Independent auditors assess our controls annually.",
       badgeIds: [],
       tiles: [
         {
@@ -278,7 +265,7 @@ const CONFIG = {
       id: "aspice",
       label: "Automotive SPICE",
       tagline: "Software process capability independently assessed at Capability Level 2.",
-      body: "Applied Intuition's software development processes are assessed against the Automotive SPICE (ASPICE) framework at Capability Level 2, independently evaluated by TÜV SÜD. CL2 demonstrates that our engineering processes are planned, monitored, and adjusted — and that work products are appropriately managed throughout the development lifecycle.",
+      body: "Applied Intuition's software development processes are assessed against the Automotive SPICE (ASPICE) framework at Capability Level 2. Our engineering processes are planned, monitored, and adjusted — and work products are appropriately managed throughout the development lifecycle.",
       tiles: [
         {
           icon: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>`,
@@ -644,6 +631,29 @@ main { padding-top: 96px; }
 .cert-action:hover { gap: 7px; }
 .cert-action svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
+/* ── TISAX TEXT REFERENCE ─────────────────────────────────── */
+.tisax-ref {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; padding: 16px 20px;
+  border: 1px solid var(--border); border-radius: 10px;
+  background: var(--bg-card); margin-bottom: 28px;
+}
+.tisax-ref-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.tisax-ref-name { font-size: 13.5px; font-weight: 600; color: var(--fg); font-family: var(--font-display); }
+.tisax-ref-meta { font-size: 12px; color: var(--fg-3); }
+.tisax-ref-levels { display: flex; gap: 5px; }
+.tisax-ref-levels span {
+  font-size: 11px; font-weight: 600; color: var(--fg-2);
+  background: var(--accent-dim); border: 1px solid var(--border);
+  border-radius: 4px; padding: 1px 7px;
+}
+.tisax-ref-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 500; color: var(--accent);
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
+}
+.tisax-ref-link svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
 /* ── TISAX VERIFICATION CARD ──────────────────────────────── */
 .tisax-card {
   border: 1px solid var(--border);
@@ -860,7 +870,7 @@ function renderTile(t) {
       <div class="tile-icon"><svg viewBox="0 0 24 24">${t.icon}</svg></div>
       <div class="tile-body">
         <h3>${esc(t.title)}</h3>
-        <p>${esc(t.body)}</p>
+        <p>${t.raw ? t.body : esc(t.body)}</p>
       </div>
     </div>
   `;
@@ -883,8 +893,8 @@ const TISAX_SVG = `
 function renderCertCard(c) {
   const mark = c.tisaxText
     ? `<div class="cert-mark cert-mark-text">
-        <span class="cert-mark-wordmark">TISAX</span>
-        <span class="cert-mark-levels"><span>AL2</span><span>AL3</span></span>
+        <span class="cert-mark-wordmark" style="font-size:32px;letter-spacing:0.06em;color:var(--fg);font-weight:700;">TISAX</span>
+        <span class="cert-mark-levels" style="margin-top:2px;"><span style="color:var(--fg-2);background:var(--accent-dim);border-color:var(--border);">AL2</span><span style="color:var(--fg-2);background:var(--accent-dim);border-color:var(--border);">AL3</span></span>
       </div>`
     : c.aspiceText
     ? `<div class="cert-mark cert-mark-text">
@@ -905,7 +915,7 @@ function renderCertCard(c) {
       <div class="cert-name">${esc(c.name)}</div>
       <div class="cert-issuer">${esc(c.issuer)}</div>
       <div class="cert-scope">${esc(c.scope)}</div>
-      <div class="cert-detail">${esc(c.detail)}</div>
+      ${c.detail ? `<div class="cert-detail">${esc(c.detail)}</div>` : ''}
       ${action}
     </div>
   `;
@@ -921,6 +931,14 @@ document.getElementById('sections-container').innerHTML = CONFIG.sections.map((s
         <p class="section-body">${esc(s.body)}</p>
       </div>
       ${s.certs ? `<div class="cert-grid">${s.certs.map(renderCertCard).join('')}</div>` : ''}
+      ${s.tisaxRef ? `
+        <div class="tisax-ref">
+          <div class="tisax-ref-left">
+            <span class="tisax-ref-name">TISAX — Trusted Information Security Assessment Exchange</span>
+            <span class="tisax-ref-meta">Applied Intuition Inc. and Applied Intuition GmbH are registered TISAX® Participants. TISAX® is a registered trademark of ENX Association, governed by <a href="https://enx.com/tisax" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">ENX Association</a>. TISAX and TISAX results are not intended for general public. Contact our security team for additional information.</span>
+          </div>
+        </div>
+      ` : ''}
       ${s.tiles && s.tiles.length ? `<div class="tiles-grid">${s.tiles.map(renderTile).join('')}</div>` : ''}
     </section>
   `;
